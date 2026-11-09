@@ -1,0 +1,186 @@
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: rgba(14, 23, 18, 0.96);
+  color: var(--bone);
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+.lb__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: zoom-out;
+}
+.lb__top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(1rem + env(safe-area-inset-top, 0px)) var(--gutter) 0.5rem;
+  pointer-events: none;
+}
+.lb__top > * {
+  pointer-events: auto;
+}
+.lb__count {
+  margin: 0;
+  font-size: var(--step--1);
+  letter-spacing: var(--track-caps);
+  color: var(--bone-muted);
+}
+.lb__count span {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  letter-spacing: 0;
+  color: var(--brass);
+}
+.lb__btn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(244, 239, 230, 0.3);
+  border-radius: 50%;
+  background: rgba(20, 32, 26, 0.5);
+  color: var(--bone);
+  transition: background-color var(--dur-ui) var(--ease-out), color var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) var(--ease-out), transform var(--dur-ui) var(--ease-out);
+}
+@media (hover: hover) {
+  .lb__btn:hover {
+    background: var(--bone);
+    color: var(--forest);
+    border-color: var(--bone);
+  }
+}
+.lb__stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0 clamp(1rem, 7vw, 7rem) calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+}
+.lb__figure {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: center;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  pointer-events: auto;
+  cursor: grab;
+}
+.lb__figure:active {
+  cursor: grabbing;
+}
+.lb__img {
+  max-width: 100%;
+  max-height: calc(100svh - 9.5rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  box-shadow: var(--shadow-lift);
+}
+.lb__empty {
+  display: grid;
+  place-items: center;
+  width: min(86vw, 56rem, calc((100svh - 10rem) * 1.4));
+  max-height: calc(100svh - 10rem);
+  padding: var(--space-5);
+  text-align: center;
+  background: linear-gradient(150deg, #2f4a3a 0%, #1d3025 55%, #16251d 100%);
+  box-shadow: inset 0 0 0 1px rgba(244, 239, 230, 0.12), var(--shadow-lift);
+  color: var(--bone-muted);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.lb__caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  justify-content: center;
+  font-size: var(--step--1);
+  color: var(--bone-muted);
+  letter-spacing: var(--track-wide);
+}
+.lb__cat {
+  color: var(--brass);
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+}
+.lb__nav {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  translate: 0 -50%;
+}
+.lb__nav--prev {
+  left: clamp(0.5rem, 2vw, 2rem);
+}
+.lb__nav--next {
+  right: clamp(0.5rem, 2vw, 2rem);
+}
+@media (max-width: 639px) {
+  .lb__nav {
+    top: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    translate: none;
+  }
+  .lb__nav--prev {
+    left: var(--gutter);
+  }
+  .lb__nav--next {
+    right: var(--gutter);
+  }
+  .lb__stage {
+    padding-inline: 1rem;
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .lb__img {
+    max-height: calc(100svh - 14rem);
+  }
+}
+
+/* Phones held sideways (even narrow ones): arrows go back to the sides and the photograph takes
+   the full height, instead of being squeezed between a top bar and a bottom arrow row. */
+@media (max-height: 540px) {
+  .lb__top {
+    padding-top: calc(0.5rem + env(safe-area-inset-top, 0px));
+    padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+  }
+  .lb__nav {
+    top: 50%;
+    bottom: auto;
+    translate: 0 -50%;
+  }
+  .lb__nav--prev {
+    left: max(0.5rem, env(safe-area-inset-left, 0px));
+  }
+  .lb__nav--next {
+    right: max(0.5rem, env(safe-area-inset-right, 0px));
+  }
+  .lb__stage {
+    padding: 0 4.25rem 0.5rem;
+  }
+  .lb__figure {
+    gap: var(--space-2);
+  }
+  .lb__img {
+    max-height: calc(100svh - 6.5rem);
+  }
+  .lb__empty {
+    width: min(70vw, calc((100svh - 7rem) * 1.4));
+    max-height: calc(100svh - 7rem);
+  }
+}

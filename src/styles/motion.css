@@ -1,0 +1,78 @@
+/* ==========================================================================
+   MOTION COMPONENT STYLES
+   ========================================================================== */
+
+/* SplitText: each word sits in a mask; the inner span rises into view. */
+.split__word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+.split__inner {
+  display: inline-block;
+}
+
+/* MaskImage: the wrapper is clipped and revealed by GSAP. */
+.mask {
+  overflow: hidden;
+}
+.mask .media {
+  height: 100%;
+}
+
+/* ParallaxMedia: the inner layer is taller than the frame and drifts. */
+.parallax {
+  position: relative;
+  overflow: hidden;
+}
+.parallax__inner {
+  position: absolute;
+  inset: -12% 0;
+}
+.parallax__inner .media {
+  height: 100%;
+}
+
+/* HorizontalScroll: pinned track on desktop, swipeable on touch and tablets. */
+.hscroll {
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.hscroll__track {
+  display: flex;
+  gap: var(--space-5);
+  padding-inline: var(--gutter);
+  width: max-content;
+}
+.hscroll__panel {
+  flex: 0 0 min(80vw, 28rem);
+  scroll-snap-align: start;
+}
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .hscroll {
+    overflow: hidden;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    scroll-snap-type: none;
+  }
+  .hscroll__panel {
+    flex-basis: min(38vw, 34rem);
+  }
+}
+
+/* Gallery tiles and masked frames promote only while they animate. */
+.mask,
+.gal__tile {
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gal__frame,
+  .cursor-label {
+    transform: none !important;
+  }
+}

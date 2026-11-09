@@ -1,0 +1,93 @@
+.act__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--space-8) clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+.act__head {
+  display: grid;
+  gap: var(--space-5);
+  position: sticky;
+  top: 7rem;
+}
+.act__title {
+  font-size: clamp(3rem, 2rem + 4.5vw, 6.5rem);
+}
+.act__head .lede {
+  margin: 0;
+}
+
+.act__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.act__cell {
+  display: flex;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.act__inner {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-6);
+  min-height: clamp(11rem, 16vw, 15rem);
+  padding: var(--space-5);
+  transition: background-color var(--dur-ui) var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+.act__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--accent);
+  transition: color var(--dur-ui) var(--ease-out);
+}
+.act__icon {
+  color: var(--moss);
+  transition: transform 0.8s var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+.act__name {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.1;
+}
+@media (hover: hover) {
+  .act__inner:hover {
+    background: var(--forest);
+    color: var(--bone);
+  }
+  .act__inner:hover .act__num {
+    color: var(--brass);
+  }
+  .act__inner:hover .act__icon {
+    color: var(--brass);
+    transform: translateY(-4px) rotate(-6deg);
+  }
+}
+
+@media (max-width: 999px) {
+  .act__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .act__head {
+    position: static;
+  }
+}
+@media (max-width: 559px) {
+  .act__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .act__cell:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .act__name {
+    font-size: var(--step-1);
+  }
+}

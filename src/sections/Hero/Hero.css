@@ -1,0 +1,206 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  padding-top: calc(var(--header-h) + var(--space-6));
+  background: radial-gradient(120% 90% at 72% 8%, var(--moss) 0%, var(--forest) 62%);
+  color: var(--bone);
+}
+.hero__media {
+  position: absolute;
+  inset: -8% 0;
+  z-index: 0;
+}
+.hero__zoom {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 60%;
+}
+.hero__zoom video,
+.hero__zoom img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__backdrop,
+.hero__backdrop svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(20, 32, 26, 0.85), rgba(20, 32, 26, 0.1) 55%, rgba(20, 32, 26, 0.5));
+}
+/* Atmospheric warm light, top right. */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(60% 50% at 82% 14%, rgba(176, 141, 87, 0.22), rgba(176, 141, 87, 0) 70%);
+  mix-blend-mode: screen;
+}
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+}
+.hero__brand {
+  margin: 0;
+  color: var(--brass);
+}
+.hero__title {
+  margin: var(--space-5) 0 var(--space-6);
+  /* Width sets the size, but never more than 17% of the screen height, so the headline, buttons
+     and location line stay on one screen on short laptops too. */
+  font-size: clamp(3.4rem, min(2rem + 9vw, 17vh), 10.5rem);
+  line-height: 0.96;
+}
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+}
+.hero__line > span {
+  display: block;
+}
+.hero__support {
+  margin: 0 0 var(--space-6);
+  max-width: 30em;
+  color: rgba(244, 239, 230, 0.86);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+.hero__foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding-block: var(--space-7) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+}
+.hero__place {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--step--1);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+.hero__cue {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.hero__cue-line {
+  position: relative;
+  width: 1px;
+  height: 3.5rem;
+  background: rgba(244, 239, 230, 0.3);
+  overflow: hidden;
+}
+.hero__cue-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bone);
+  transform: translateY(-100%);
+  animation: cue 2.4s var(--ease-in-out) infinite;
+}
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+/* The scroll cue is a link, so it gets a full-size touch target even though only a hairline shows. */
+.hero__cue {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-content: end;
+}
+
+@media (max-width: 719px) {
+  .hero {
+    padding-top: calc(var(--header-h) + var(--space-5));
+  }
+  .hero__title {
+    margin-block: var(--space-4) var(--space-5);
+    font-size: clamp(2.9rem, 2rem + 9vw, 5.2rem);
+  }
+  .hero__support {
+    margin-bottom: var(--space-5);
+    font-size: var(--step-0);
+  }
+  .hero__foot {
+    padding-block: var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom, 0px));
+  }
+}
+@media (max-width: 479px) {
+  .hero__cue-label {
+    display: none;
+  }
+}
+
+/* Short, wide screens: phones held sideways, small landscape windows. The headline sits on the left,
+   the supporting line and buttons on the right, so the whole first screen fits without scrolling.
+   Sizes follow the screen HEIGHT here, because height is what runs out. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .hero {
+    padding-top: calc(3.75rem + env(safe-area-inset-top, 0px));
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    column-gap: var(--space-7);
+    align-items: end;
+  }
+  .hero__brand {
+    grid-column: 1 / -1;
+    font-size: 0.7rem;
+  }
+  .hero__title {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+    margin: var(--space-2) 0 0;
+    font-size: clamp(2.4rem, 17vh, 4.6rem);
+  }
+  .hero__support {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    margin: 0 0 var(--space-3);
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .hero__actions {
+    grid-column: 2;
+    grid-row: 3;
+    gap: 0 var(--space-5);
+  }
+  .hero__foot {
+    padding-block: var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  }
+  .hero__cue {
+    display: none;
+  }
+}

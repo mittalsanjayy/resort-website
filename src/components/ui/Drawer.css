@@ -1,0 +1,68 @@
+.drawer__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(20, 32, 26, 0.55);
+}
+@media (min-width: 900px) {
+  .drawer__backdrop {
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+}
+.drawer {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 64rem);
+  height: 100%;
+  background: var(--bone);
+  color: var(--forest);
+  box-shadow: var(--shadow-lift);
+}
+.drawer__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: calc(var(--space-3) + env(safe-area-inset-top, 0px)) var(--space-4) var(--space-3) var(--space-6);
+  border-bottom: 1px solid var(--mist);
+}
+.drawer__label {
+  margin: 0;
+  color: var(--brass-text);
+}
+.drawer__close {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.drawer__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (max-width: 599px) {
+  .drawer__bar {
+    padding-left: var(--space-5);
+  }
+}
+/* Landscape phones: a slimmer top bar, and respect the notch on the left and right. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .drawer {
+    width: min(100%, 64rem);
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+  }
+  .drawer__bar {
+    padding-top: calc(var(--space-2) + env(safe-area-inset-top, 0px));
+    padding-bottom: var(--space-2);
+  }
+}

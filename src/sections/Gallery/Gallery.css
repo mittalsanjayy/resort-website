@@ -1,0 +1,320 @@
+.gal {
+  overflow-x: clip;
+}
+.gal__head {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 52rem;
+  margin-bottom: var(--space-8);
+}
+.gal__title {
+  font-size: clamp(3rem, 1.8rem + 6vw, 7.5rem);
+}
+.gal__head .lede {
+  margin: 0;
+}
+
+/* Full-bleed feature frame */
+.gal__feature {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.gal__feature-shade {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-bottom);
+  pointer-events: none;
+}
+.gal__feature-tag {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--space-5);
+  margin: 0;
+  color: var(--bone);
+}
+.gal__feature .parallax {
+  /* An explicit width matters: with an aspect-ratio, min-height alone would force the frame wider than
+     a 320px screen (16rem x 4/3 = 341px). */
+  width: 100%;
+  min-height: 16rem;
+}
+.gal__note {
+  margin: var(--space-5) 0 0;
+  max-width: 42rem;
+  color: var(--fg-muted);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-wide);
+}
+
+/* Filters */
+.gal__body {
+  margin-top: var(--space-8);
+}
+.gal__filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-7);
+  padding-bottom: var(--space-2);
+  /* Wrap instead of scrolling sideways, so every category is visible on a phone. */
+  flex-wrap: wrap;
+}
+.gal__filter {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.7rem 1.25rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--bone-muted);
+  isolation: isolate;
+  transition: color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+.gal__filter[aria-pressed='true'] {
+  color: var(--forest);
+  border-color: var(--bone);
+}
+.gal__pill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 999px;
+  background: var(--bone);
+}
+.gal__count {
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+@media (hover: hover) {
+  .gal__filter:hover {
+    color: var(--bone);
+    border-color: var(--brass);
+  }
+  .gal__filter[aria-pressed='true']:hover {
+    color: var(--forest);
+  }
+}
+
+/* Masonry */
+.gal__stage {
+  min-height: 30rem;
+}
+.gal__grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  columns: 2;
+  column-gap: clamp(0.6rem, 2vw, 2rem);
+}
+/* A lone photograph (or a filter with one) should not sit in half the width. */
+.gal__grid[style*='--gal-cols: 1'] {
+  columns: 1;
+  max-width: 30rem;
+}
+@media (min-width: 900px) {
+  /* Column count follows the number of photographs (set in Gallery.jsx as --gal-cols), so a small set
+     stays balanced and centred instead of leaving empty columns. Five or more: full three-column masonry. */
+  .gal__grid {
+    columns: 3;
+  }
+  .gal__grid[style*='--gal-cols: 2'] {
+    columns: 2;
+    max-width: 72%;
+  }
+  .gal__grid[style*='--gal-cols: 1'] {
+    columns: 1;
+    max-width: 36%;
+  }
+}
+.gal__item {
+  break-inside: avoid;
+  margin-bottom: clamp(0.6rem, 2vw, 2rem);
+}
+.gal__tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--moss);
+  overflow: hidden;
+  text-align: left;
+  color: var(--bone);
+  cursor: pointer;
+}
+.gal__frame {
+  display: block;
+  overflow: hidden;
+}
+.gal__frame img,
+.gal__ph {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease-out), filter 1.4s var(--ease-out);
+}
+.gal__ph {
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  text-align: center;
+  background: linear-gradient(150deg, #2f4a3a 0%, #1d3025 55%, #16251d 100%);
+  color: var(--bone-muted);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.gal__shade {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim-bottom);
+  opacity: 0;
+  transition: opacity var(--dur-reveal) var(--ease-out);
+  pointer-events: none;
+}
+/* Thin brass frame that draws in on hover */
+.gal__tile::after {
+  content: '';
+  position: absolute;
+  inset: 0.9rem;
+  border: 1px solid var(--brass);
+  opacity: 0;
+  clip-path: inset(0 100% 100% 0);
+  transition: opacity var(--dur-ui) var(--ease-out), clip-path 0.9s var(--ease-out);
+  pointer-events: none;
+}
+.gal__meta {
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  opacity: 0;
+  transform: translateY(0.9rem);
+  transition: opacity var(--dur-ui) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+  pointer-events: none;
+}
+.gal__cat {
+  font-size: var(--step--1);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+.gal__plus {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid rgba(244, 239, 230, 0.6);
+  border-radius: 50%;
+}
+/* Touch screens: no hover, so the category label rests visible at the foot of each photograph. */
+@media (hover: none) {
+  .gal__shade,
+  .gal__meta {
+    opacity: 1;
+    transform: none;
+  }
+  .gal__meta {
+    left: 0.8rem;
+    right: 0.8rem;
+    bottom: 0.7rem;
+  }
+  .gal__plus {
+    display: none;
+  }
+  .gal__cat {
+    font-size: 0.66rem;
+  }
+}
+@media (hover: hover) {
+  .gal__tile:hover .gal__frame img,
+  .gal__tile:hover .gal__ph,
+  .gal__tile:focus-visible .gal__frame img,
+  .gal__tile:focus-visible .gal__ph {
+    transform: scale(1.06);
+  }
+  .gal__tile:hover .gal__shade,
+  .gal__tile:focus-visible .gal__shade,
+  .gal__tile:hover .gal__meta,
+  .gal__tile:focus-visible .gal__meta {
+    opacity: 1;
+    transform: none;
+  }
+  .gal__tile:hover::after,
+  .gal__tile:focus-visible::after {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  /* Siblings recede while one photograph is in focus */
+  .gal__grid:has(.gal__tile:hover) .gal__tile:not(:hover) .gal__frame {
+    opacity: 0.55;
+    filter: saturate(0.7);
+  }
+  .gal__frame {
+    transition: opacity var(--dur-reveal) var(--ease-out), filter var(--dur-reveal) var(--ease-out);
+  }
+}
+
+/* Statement */
+.gal__statement {
+  max-width: 22ch;
+  margin: var(--space-9) auto 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 4rem);
+  line-height: var(--lh-heading);
+}
+@media (min-width: 900px) {
+  .gal__statement {
+    max-width: 26ch;
+  }
+}
+
+/* Cursor follower */
+.cursor-label {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: var(--bone);
+  color: var(--forest);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-label {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .gal__feature .parallax {
+    aspect-ratio: 4 / 3 !important;
+  }
+  .gal__head {
+    margin-bottom: var(--space-6);
+  }
+  .gal__body {
+    margin-top: var(--space-6);
+  }
+}

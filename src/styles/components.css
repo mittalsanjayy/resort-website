@@ -1,0 +1,170 @@
+/* ==========================================================================
+   BUTTON SYSTEM
+   Variants: primary (outline, fill sweep), light (outline on dark),
+             solid (filled forest), solid-light (filled ivory), ghost (text link)
+   Sizes:    sm, md (default), lg
+   ========================================================================== */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 2.9rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  transition: color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  transform: translateY(101%);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.btn svg {
+  flex: none;
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+
+.btn--sm { min-height: 2.75rem; padding: 0.6rem 1.1rem; font-size: 0.72rem; }
+.btn--lg { min-height: 3.4rem; padding: 1.1rem 2.2rem; }
+
+.btn--primary { color: var(--forest); }
+.btn--light { color: var(--bone); }
+
+.btn--solid { background: var(--forest); border-color: var(--forest); color: var(--bone); }
+.btn--solid::before { background: var(--moss); }
+
+.btn--solid-light { background: var(--bone); border-color: var(--bone); color: var(--forest); }
+.btn--solid-light::before { background: var(--linen); }
+
+.btn--ghost {
+  /* A text-style button still needs a 44px tall touch target. */
+  min-height: 2.75rem;
+  padding: 0.3rem 0;
+  border-color: transparent;
+}
+.btn--ghost::before { display: none; }
+.btn--ghost span {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  padding-bottom: 0.35rem;
+  transition: background-size var(--dur-ui) var(--ease-out);
+}
+
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Hover effects only where a real pointer exists (not on touch screens). */
+@media (hover: hover) {
+  .btn:hover::before { transform: translateY(0); }
+  .btn:hover svg { transform: translate(2px, -2px); }
+  .btn--primary:hover { color: var(--bone); }
+  .btn--light:hover { color: var(--forest); }
+  .btn--ghost:hover span { background-size: 100% 1px; }
+}
+
+/* ==========================================================================
+   MEDIA FRAME
+   ========================================================================== */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--linen);
+}
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.media__empty {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  text-align: center;
+  background: linear-gradient(135deg, var(--mist), var(--linen));
+  color: var(--ink-muted);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   MODAL
+   ========================================================================== */
+.modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: rgba(20, 32, 26, 0.62);
+}
+@media (min-width: 900px) {
+  .modal__backdrop {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  max-height: 90svh;
+  overflow-y: auto;
+  padding: var(--space-7) var(--space-6) var(--space-6);
+  background: var(--bone);
+  color: var(--forest);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lift);
+}
+.modal__title { margin: 0 0 var(--space-4); }
+.modal__body { display: grid; gap: var(--space-5); justify-items: start; }
+.modal__body p { margin: 0; color: var(--ink-muted); }
+.modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 0;
+}
+
+/* ==========================================================================
+   PLACEHOLDERS ON DARK SECTIONS
+   Until real photographs are added, empty frames use a tonal forest treatment
+   and keep their "photograph to be added" label.
+   ========================================================================== */
+.theme-dark .media {
+  background: var(--moss);
+}
+.theme-dark .media__empty {
+  background: linear-gradient(150deg, #2f4a3a 0%, #1d3025 55%, #16251d 100%);
+  color: var(--bone-muted);
+  box-shadow: inset 0 0 0 1px rgba(244, 239, 230, 0.08);
+}

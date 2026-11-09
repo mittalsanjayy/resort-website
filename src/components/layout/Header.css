@@ -1,0 +1,315 @@
+.header {
+  --hpad: 1.4rem;
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-header);
+  padding-top: calc(var(--hpad) + env(safe-area-inset-top, 0px));
+  padding-bottom: var(--hpad);
+  color: var(--bone);
+  border-bottom: 1px solid transparent;
+  transition: background var(--dur-ui) var(--ease-out), color var(--dur-ui) var(--ease-out),
+    padding var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out),
+    transform var(--dur-scene) var(--ease-out), opacity var(--dur-reveal) var(--ease-out);
+}
+.header--scrolled {
+  --hpad: 0.8rem;
+  background: rgba(244, 239, 230, 0.96);
+  color: var(--forest);
+  border-bottom-color: var(--mist);
+}
+/* Blur is only worth its cost on large screens; on phones the bar is simply a solid ivory band. */
+@media (min-width: 900px) {
+  .header--scrolled {
+    background: rgba(244, 239, 230, 0.92);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+}
+/* The bar sits over a dark hero first and over ivory once scrolled: pick the ring colour to match. */
+.header :focus-visible {
+  outline-color: var(--brass);
+}
+.header--scrolled :focus-visible {
+  outline-color: var(--brass-text);
+}
+.header--hidden {
+  transform: translateY(-101%);
+}
+/* Before the loader finishes the bar waits above the viewport, then glides down. */
+.header--pre {
+  transform: translateY(-101%);
+  opacity: 0;
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+.header__progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  line-height: 1.1;
+}
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: var(--track-brand);
+  font-weight: 500;
+}
+.brand__sub {
+  margin-top: 0.3rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.brand__logo {
+  height: 3.6rem;
+  width: 3.6rem;
+  border-radius: 50%;
+  transition: height var(--dur-ui) var(--ease-out), width var(--dur-ui) var(--ease-out);
+}
+.header--scrolled .brand__logo {
+  height: 2.9rem;
+  width: 2.9rem;
+}
+.header__nav {
+  display: flex;
+  gap: clamp(1.2rem, 2.4vw, 2.4rem);
+}
+.header__nav a {
+  position: relative;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  padding-block: 0.4rem;
+}
+/* Letter-rolling label: the word slides up and an identical copy slides in beneath it. */
+.navlink {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.navlink__text {
+  display: block;
+  transition: transform 0.6s var(--ease-out);
+}
+.navlink::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  color: var(--brass);
+  transition: transform 0.6s var(--ease-out);
+}
+.header--scrolled .navlink::after {
+  color: var(--brass-text);
+}
+.header__nav a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.15rem;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--brass);
+  transform: scale(0);
+  transition: transform var(--dur-ui) var(--ease-out);
+}
+.header__nav a[aria-current='true']::after {
+  transform: scale(1);
+}
+@media (hover: hover) {
+  .header__nav a:hover .navlink__text,
+  .header__nav a:hover .navlink::after {
+    transform: translateY(-100%);
+  }
+}
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.header__burger {
+  display: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--forest);
+  color: var(--bone);
+  overflow-y: auto;
+}
+.overlay__inner {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: calc(6rem + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+  position: relative;
+}
+.overlay__close {
+  position: absolute;
+  top: calc(1rem + env(safe-area-inset-top, 0px));
+  right: var(--gutter);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+.overlay__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.overlay__item {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(244, 239, 230, 0.1);
+}
+.overlay__list a {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 1.6rem + 3vw, 4.2rem);
+  line-height: 1.2;
+  padding-block: 0.15em;
+  transition: transform var(--dur-reveal) var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+.overlay__num {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  letter-spacing: var(--track-caps);
+  color: var(--brass);
+  min-width: 2rem;
+}
+.overlay__label {
+  font-style: normal;
+}
+@media (hover: hover) {
+  .overlay__list a:hover {
+    transform: translateX(0.8rem);
+    color: var(--brass);
+  }
+  .overlay__list a:hover .overlay__label {
+    font-style: italic;
+  }
+}
+.overlay__cta {
+  margin-top: var(--space-7);
+}
+.overlay__foot {
+  margin-top: var(--space-7);
+}
+
+@media (max-width: 1279px) {
+  .header__nav {
+    display: none;
+  }
+  .header__burger {
+    display: grid;
+  }
+}
+@media (max-width: 399px) {
+  .header__cta {
+    display: none;
+  }
+}
+
+/* Phones: a slimmer bar leaves more of the first screen for the picture. */
+@media (max-width: 719px) {
+  .header {
+    --hpad: 1rem;
+  }
+  .brand__logo {
+    height: 3rem;
+    width: 3rem;
+  }
+  .header--scrolled {
+    --hpad: 0.6rem;
+  }
+  .header--scrolled .brand__logo {
+    height: 2.6rem;
+    width: 2.6rem;
+  }
+  .header__inner {
+    gap: var(--space-3);
+  }
+}
+
+/* Phones held sideways and other very short screens: the bar and the menu must not eat the page. */
+@media (orientation: landscape) and (max-height: 540px) {
+  .header,
+  .header--scrolled {
+    --hpad: 0.45rem;
+  }
+  .brand__logo,
+  .header--scrolled .brand__logo {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+  .overlay__inner {
+    padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .overlay__close {
+    top: calc(0.5rem + env(safe-area-inset-top, 0px));
+  }
+  .overlay__list {
+    columns: 2;
+    column-gap: var(--space-7);
+  }
+  .overlay__item {
+    break-inside: avoid;
+  }
+  .overlay__list a {
+    font-size: var(--step-1);
+    padding-block: 0.3em;
+  }
+  .overlay__cta,
+  .overlay__foot {
+    margin-top: var(--space-4);
+  }
+}
+
+/* Short screens: keep the full menu on one screen where possible. */
+@media (max-height: 760px) {
+  .overlay__list a {
+    font-size: var(--step-2);
+  }
+  .overlay__cta,
+  .overlay__foot {
+    margin-top: var(--space-5);
+  }
+}

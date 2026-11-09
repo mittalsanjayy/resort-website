@@ -1,0 +1,85 @@
+/* Containers */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  /* In landscape, phones with a notch or rounded corners must not clip the text. */
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)) max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.container--wide { max-width: var(--container-wide); }
+.container--narrow { max-width: var(--container-narrow); }
+
+/* Sections */
+.section {
+  padding-block: var(--section-y);
+  background: var(--bg);
+  color: var(--fg);
+}
+.section--alt { background: var(--bg-alt); }
+.section--tight { padding-block: var(--section-y-sm); }
+
+/* 12-column grid. Place children with --start and --span, e.g.
+   <div class="col" style="--start:2; --span:5"> */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+.col {
+  grid-column: var(--start, auto) / span var(--span, 12);
+}
+@media (max-width: 799px) {
+  .col {
+    grid-column: 1 / -1;
+  }
+}
+
+.stack > * + * { margin-top: var(--stack, var(--space-5)); }
+
+.hairline {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+
+/* Image ratios */
+.ratio-portrait { aspect-ratio: var(--ratio-portrait); }
+.ratio-tall { aspect-ratio: var(--ratio-tall); }
+.ratio-landscape { aspect-ratio: var(--ratio-landscape); }
+.ratio-wide { aspect-ratio: var(--ratio-wide); }
+.ratio-square { aspect-ratio: var(--ratio-square); }
+
+/* Image treatment: a scrim sits inside a positioned frame, above the image. */
+.scrim-bottom,
+.scrim-full {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.scrim-bottom { background: var(--scrim-bottom); }
+.scrim-full { background: var(--scrim-full); }
+.img-grade img,
+.img-grade video {
+  filter: saturate(0.96) contrast(1.02);
+}
+.caption {
+  margin: var(--space-3) 0 0;
+  font-size: var(--step--1);
+  letter-spacing: var(--track-wide);
+  color: var(--fg-muted);
+}
+
+.safe-top { padding-top: env(safe-area-inset-top, 0px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

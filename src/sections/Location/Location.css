@@ -1,0 +1,195 @@
+.loc__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: var(--space-8) clamp(2rem, 6vw, 6rem);
+  align-items: center;
+}
+.loc__text {
+  display: grid;
+  gap: var(--space-5);
+  justify-items: start;
+  min-width: 0;
+  width: 100%;
+}
+.loc__text h2,
+.loc__text .lede {
+  margin: 0;
+}
+.loc__address {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--fg-muted);
+}
+
+/* ---- Call / WhatsApp / Email ------------------------------------------------------------- */
+.loc__channels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 30rem;
+}
+.loc__channel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--mist);
+  color: var(--fg);
+  transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-ui) var(--ease-out), box-shadow var(--dur-ui) var(--ease-out);
+}
+.loc__channel-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--bone);
+  transition: background-color var(--dur-ui) var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+.loc__channel-text {
+  display: grid;
+  min-width: 0;
+}
+.loc__channel-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  color: var(--fg-muted);
+}
+.loc__channel-value {
+  font-size: var(--step-0);
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.loc__channel:focus-visible,
+.loc__social a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .loc__channel:hover {
+    border-color: var(--forest);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+  }
+  .loc__channel:hover .loc__channel-icon {
+    background: var(--brass);
+    color: var(--forest);
+  }
+}
+
+/* ---- Social ------------------------------------------------------------------------------ */
+.loc__social {
+  display: grid;
+  gap: var(--space-3);
+}
+.loc__social .eyebrow {
+  margin: 0;
+}
+.loc__social ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-6);
+}
+.loc__social a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  background: linear-gradient(currentColor, currentColor) 0 calc(50% + 0.85em) / 0% 1px no-repeat;
+  transition: background-size var(--dur-ui) var(--ease-out);
+}
+@media (hover: hover) {
+  .loc__social a:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* ---- Map card ---------------------------------------------------------------------------- */
+.loc__map {
+  position: relative;
+  overflow: hidden;
+  min-height: 26rem;
+  display: grid;
+  place-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--mist);
+  box-shadow: var(--shadow-soft);
+  color: var(--moss);
+}
+.loc__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+.loc__map-body {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-5);
+  text-align: center;
+  color: var(--fg);
+}
+.loc__map-body p {
+  margin: 0;
+}
+.loc__pin {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: var(--brass);
+  color: var(--forest);
+  animation: loc-pin 3.2s var(--ease-in-out) infinite;
+}
+.loc__map-title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.1;
+}
+.loc__map-line {
+  color: var(--fg-muted);
+  line-height: 1.6;
+}
+.loc__map-body .btn {
+  margin-top: var(--space-2);
+}
+.loc__map-note {
+  font-size: var(--step--1);
+  color: var(--fg-muted);
+  max-width: 22rem;
+}
+@keyframes loc-pin {
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 0 0 rgba(176, 141, 87, 0.45); }
+  50% { transform: translateY(-5px); box-shadow: 0 0 0 14px rgba(176, 141, 87, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loc__pin { animation: none; }
+  .loc__channel { transition: none; }
+}
+
+@media (max-width: 899px) {
+  .loc__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .loc__map {
+    min-height: 22rem;
+  }
+}

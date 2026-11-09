@@ -1,0 +1,51 @@
+.fab {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3.2rem;
+  padding: 0 1.15rem;
+  border-radius: 999px;
+  background: var(--forest);
+  color: var(--bone);
+  border: 1px solid var(--brass);
+  box-shadow: var(--shadow-lift);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+}
+.fab svg {
+  color: var(--brass);
+}
+.fab:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .fab {
+    transition: background-color var(--dur-ui) var(--ease-out);
+  }
+  .fab:hover {
+    background: var(--moss);
+  }
+}
+/* On small phones keep only the icon so it never covers content. */
+@media (max-width: 479px) {
+  .fab {
+    width: 3.4rem;
+    padding: 0;
+    justify-content: center;
+  }
+  .fab__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

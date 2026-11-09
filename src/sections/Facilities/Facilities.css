@@ -1,0 +1,30 @@
+.fac__head {
+  margin-bottom: var(--space-8);
+}
+.fac__head h2 {
+  margin-top: var(--space-4);
+}
+.fac__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-7) clamp(1.5rem, 3vw, 3rem);
+}
+.fac__card {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+.fac__card p {
+  margin: 0;
+  color: var(--fg-muted);
+}
+@media (max-width: 999px) {
+  .fac__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 599px) {
+  .fac__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

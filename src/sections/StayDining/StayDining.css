@@ -1,0 +1,210 @@
+.sd {
+  overflow-x: clip;
+}
+.sd__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-8) clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+/* Photography composition: a tall frame with a smaller frame overlapping its lower edge. */
+.sd__visual {
+  position: sticky;
+  top: 6.5rem;
+  padding-bottom: 14%;
+}
+.sd__main {
+  width: 100%;
+}
+.sd__inset {
+  position: absolute;
+  right: -6%;
+  bottom: 0;
+  width: 46%;
+  border: 0.6rem solid var(--bg-alt);
+  box-shadow: var(--shadow-soft);
+}
+.sd__stamp {
+  position: absolute;
+  left: -0.4rem;
+  bottom: 1.2rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-3);
+  color: var(--brass);
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  line-height: 1;
+}
+
+.sd__copy {
+  display: grid;
+  gap: var(--space-7);
+}
+.sd__head {
+  display: grid;
+  gap: var(--space-5);
+}
+.sd__title {
+  font-size: clamp(3rem, 2rem + 4.5vw, 6.5rem);
+}
+.sd__head .lede {
+  margin: 0;
+}
+.sd__statement {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.25;
+  color: var(--fg);
+}
+.sd__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.sd__list li {
+  border-bottom: 1px solid var(--line);
+}
+.sd__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'num main icon'
+    'num cta cta';
+  gap: var(--space-4) var(--space-5);
+  align-items: start;
+  padding-block: var(--space-6);
+}
+.sd__num {
+  grid-area: num;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--step-2);
+  color: var(--accent);
+}
+.sd__main-text {
+  grid-area: main;
+  display: grid;
+  gap: var(--space-3);
+}
+.sd__name {
+  margin: 0;
+  font-size: var(--step-3);
+}
+.sd__pending {
+  margin: 0;
+  color: var(--fg-muted);
+}
+.sd__icon {
+  grid-area: icon;
+  color: var(--moss);
+}
+.sd__row .btn {
+  grid-area: cta;
+  justify-self: start;
+}
+.sd__row {
+  position: relative;
+  transition: padding-left var(--dur-reveal) var(--ease-out);
+}
+.sd__row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--brass);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--dur-reveal) var(--ease-out);
+}
+.sd__icon {
+  transition: transform var(--dur-reveal) var(--ease-out), color var(--dur-ui) var(--ease-out);
+}
+@media (hover: hover) {
+  .sd__row:hover {
+    padding-left: var(--space-4);
+  }
+  .sd__row:hover::before {
+    transform: scaleY(1);
+  }
+  .sd__row:hover .sd__icon {
+    transform: rotate(-8deg) scale(1.08);
+    color: var(--brass-text);
+  }
+}
+
+.sd__plan {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-top: var(--space-9);
+  padding: var(--space-7) clamp(1.5rem, 4vw, 4rem);
+  background: var(--forest);
+  color: var(--bone);
+  border-radius: var(--radius-sm);
+}
+.sd__plan h3 {
+  margin: 0 0 var(--space-3);
+}
+.sd__plan p {
+  margin: 0;
+  max-width: 32em;
+  color: var(--bone-muted);
+}
+.sd__plan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+/* Buttons inside the dark band: outline variant needs light text, solid needs ivory fill. */
+.sd__plan .btn--solid {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: var(--forest);
+}
+.sd__plan .btn--solid::before {
+  background: var(--linen);
+}
+.sd__plan .btn--primary {
+  color: var(--bone);
+}
+@media (hover: hover) {
+  .sd__plan .btn--primary:hover {
+    color: var(--forest);
+  }
+}
+
+@media (max-width: 999px) {
+  .sd__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sd__visual {
+    position: relative;
+    top: auto;
+    max-width: 34rem;
+    padding-right: 4%;
+  }
+  .sd__inset {
+    right: 0;
+  }
+}
+@media (max-width: 479px) {
+  .sd__row {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'num main'
+      'num icon'
+      'cta cta';
+  }
+  .sd__plan-actions .btn {
+    flex: 1 1 100%;
+  }
+}
